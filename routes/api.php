@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +19,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::get('logout', [AuthController::class , 'logout']);
+    Route::apiResource('project', ProjectController::class)->only(['index', 'show']);
+    Route::apiResource('user', UserController::class)->only(['index', 'show']);
+    Route::get('project/{project}/members', [ProjectController::class , 'members']);
+    Route::delete('project/{project}/members/{member}', [ProjectController::class , 'deleteMember']);
+
 });
 
 Route::post('login', [AuthController::class , 'login']);

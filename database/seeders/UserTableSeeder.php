@@ -21,6 +21,5 @@ class UserTableSeeder extends Seeder
         $user->gitlab_token = '8iscuLB6M_PzSAjfEwY7';
         $user->password = Hash::make('12345678');
         $user->save();
-        $user->createToken('access');
     }
 }
