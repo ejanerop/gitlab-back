@@ -29,8 +29,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
-        'gitlab_token',
+        'remember_token'
     ];
 
     /**

@@ -22,7 +22,7 @@ class AuthController extends Controller
             $token = $user->createToken('access');
             return ['user'=>$user , 'token' => $token->plainTextToken];
         }
-        return response()->json('Usuario y/o contraseña incorrecto', 401);
+        return response()->json('Usuario y/o contraseña incorrecto', 422);
     }
 
     public function logout( Request $request )

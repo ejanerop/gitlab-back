@@ -2,43 +2,91 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    public function index( Request $request )
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        $user = $request->user();
-        $client = new Client([
-            'base_uri' => "https://gitlab.com/api/v4/",
-            'timeout'  => 5.0,
-            ]
-        );
+        return User::all();
+    }
 
-        $response = $client->get("users" , ['headers' => [
-            'PRIVATE-TOKEN' => $user->gitlab_token
-            ]]
-        );
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store( Request $request )
+    {
+        $validate = $request->validate([
+            'name' => 'required|string|unique:users',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'token' => 'required|string'
+        ]);
 
-        return response()->json(json_decode($response->getBody()), 201);
+        $user = new User();
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('name'));
+        $user->gitlab_token = $request->input('token');
+        $user->save();
 
     }
 
-    public function show( Request $request , $user )
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function show( User $user )
     {
-        $auth_user = $request->user();
-        $client = new Client([
-            'base_uri' => "https://gitlab.com/api/v4/",
-            'timeout'  => 5.0,
-            ]
-        );
+        return $user->toJson(JSON_PRETTY_PRINT);
+    }
 
-        $response = $client->get("users/" . $user , ['headers' => [
-            'PRIVATE-TOKEN' => $auth_user->gitlab_token
-            ]]
-        );
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, User $user)
+    {
+        $validate = $request->validate([
+            'name' => ['required', 'string', Rule::unique('users')->ignore($user)],
+            'email' => ['required', 'email', Rule::unique('users')->ignore($user)],
+            'token' => 'required|string'
+        ]);
 
-        return response()->json(json_decode($response->getBody()), 201);
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->gitlab_token = $request->input('token');
+        $user->save();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy( Request $request, User $user )
+    {
+        if ($request->user()->id == $user->id) {
+            return response()->json('No se puede eliminar el usuario autenticado', 403);
+        }
+        $user->delete();
+        return response()->json('Eliminado correctamente', 204);
     }
 }
