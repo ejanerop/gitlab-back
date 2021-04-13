@@ -12,7 +12,7 @@ class ProjectController extends Controller
         $user = $request->user();
         $client = new Client([
             'base_uri' => "https://gitlab.com/api/v4/",
-            'timeout'  => 5.0,
+            'timeout'  => 10.0,
             ]
         );
 
@@ -21,7 +21,7 @@ class ProjectController extends Controller
             ]]
         );
 
-        return response()->json(json_decode($response->getBody()), 201);
+        return response()->json(json_decode($response->getBody()), 200);
 
     }
 
