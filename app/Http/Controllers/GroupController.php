@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ConnectException;
 
 class GroupController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function index( Request $request )
     {
         $user = $request->user();
@@ -20,21 +22,26 @@ class GroupController extends Controller
             'timeout'  => 5.0,
             ]
         );
-
-        $response = $client->get("groups?per_page=50" , ['headers' => [
-            'PRIVATE-TOKEN' => $user->gitlab_token
-            ]]
-        );
+        try {
+            $response = $client->get("groups?per_page=50" , ['headers' => [
+                'PRIVATE-TOKEN' => $user->gitlab_token
+                ]]
+            );
+        } catch (ClientException $e) {
+            return response()->json('Error', $e->getResponse()->getStatusCode());
+        } catch (ConnectException $e) {
+            return response()->json('Error', 408);
+        }
 
         return response()->json(json_decode($response->getBody()), 200);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Display the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function show( Request $request, $id)
     {
         $user = $request->user();
@@ -43,11 +50,16 @@ class GroupController extends Controller
             'timeout'  => 5.0,
             ]
         );
-
-        $response = $client->get("groups/" . $id , ['headers' => [
-            'PRIVATE-TOKEN' => $user->gitlab_token
-            ]]
-        );
+        try {
+            $response = $client->get("groups/" . $id , ['headers' => [
+                'PRIVATE-TOKEN' => $user->gitlab_token
+                ]]
+            );
+        } catch (ClientException $e) {
+            return response()->json('Error', $e->getResponse()->getStatusCode());
+        } catch (ConnectException $e) {
+            return response()->json('Error', 408);
+        }
 
         return response()->json(json_decode($response->getBody()), 200);
     }
@@ -60,11 +72,17 @@ class GroupController extends Controller
             'timeout'  => 5.0,
             ]
         );
+        try {
+            $response = $client->get("groups/" . $group . "/projects", ['headers' => [
+                'PRIVATE-TOKEN' => $user->gitlab_token
+                ]]
+            );
+        } catch (ClientException $e) {
+            return response()->json('Error', $e->getResponse()->getStatusCode());
+        } catch (ConnectException $e) {
+            return response()->json('Error', 408);
+        }
 
-        $response = $client->get("groups/" . $group . "/projects", ['headers' => [
-            'PRIVATE-TOKEN' => $user->gitlab_token
-            ]]
-        );
 
         return response()->json(json_decode($response->getBody()), $response->getStatusCode());
     }
@@ -77,11 +95,17 @@ class GroupController extends Controller
             'timeout'  => 5.0,
             ]
         );
+        try {
+            $response = $client->get("groups/" . $group . "/members", ['headers' => [
+                'PRIVATE-TOKEN' => $user->gitlab_token
+                ]]
+            );
+        } catch (ClientException $e) {
+            return response()->json('Error', $e->getResponse()->getStatusCode());
+        } catch (ConnectException $e) {
+            return response()->json('Error', 408);
+        }
 
-        $response = $client->get("groups/" . $group . "/members", ['headers' => [
-            'PRIVATE-TOKEN' => $user->gitlab_token
-            ]]
-        );
 
         return response()->json(json_decode($response->getBody()), $response->getStatusCode());
     }
@@ -94,11 +118,16 @@ class GroupController extends Controller
             'timeout'  => 5.0,
             ]
         );
-
-        $response = $client->get("groups/" . $group . "/members" . "/" . $member, ['headers' => [
-            'PRIVATE-TOKEN' => $user->gitlab_token
-            ]]
-        );
+        try {
+            $response = $client->get("groups/" . $group . "/members" . "/" . $member, ['headers' => [
+                'PRIVATE-TOKEN' => $user->gitlab_token
+                ]]
+            );
+        } catch (ClientException $e) {
+            return response()->json('Error', $e->getResponse()->getStatusCode());
+        } catch (ConnectException $e) {
+            return response()->json('Error', 408);
+        }
 
         return response()->json(json_decode($response->getBody()), $response->getStatusCode());
     }
@@ -111,11 +140,17 @@ class GroupController extends Controller
             'timeout'  => 5.0,
             ]
         );
+        try {
+            $response = $client->delete("groups/" . $group . "/members" . "/" . $member, ['headers' => [
+                'PRIVATE-TOKEN' => $user->gitlab_token
+                ]]
+            );
+        } catch (ClientException $e) {
+            return response()->json('Operación no permitida', $e->getResponse()->getStatusCode());
+        } catch (ConnectException $e) {
+            return response()->json('Error', 408);
+        }
 
-        $response = $client->delete("groups/" . $group . "/members" . "/" . $member, ['headers' => [
-            'PRIVATE-TOKEN' => $user->gitlab_token
-            ]]
-        );
 
         return response()->json(json_decode($response->getBody()), $response->getStatusCode());
     }

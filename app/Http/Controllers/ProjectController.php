@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ConnectException;
 
 class ProjectController extends Controller
 {
@@ -15,11 +17,17 @@ class ProjectController extends Controller
             'timeout'  => 10.0,
             ]
         );
+        try {
+            $response = $client->get("projects" , ['headers' => [
+                'PRIVATE-TOKEN' => $user->gitlab_token
+                ]]
+            );
+        } catch (ClientException $e) {
+            return response()->json('Error', $e->getResponse()->getStatusCode());
+        } catch (ConnectException $e) {
+            return response()->json('Error', 408);
+        }
 
-        $response = $client->get("projects" , ['headers' => [
-            'PRIVATE-TOKEN' => $user->gitlab_token
-            ]]
-        );
 
         return response()->json(json_decode($response->getBody()), $response->getStatusCode());
 
@@ -33,11 +41,17 @@ class ProjectController extends Controller
             'timeout'  => 5.0,
             ]
         );
+        try {
+            $response = $client->get("projects/" . $project , ['headers' => [
+                'PRIVATE-TOKEN' => $user->gitlab_token
+                ]]
+            );
+        } catch (ClientException $e) {
+            return response()->json('Error', $e->getResponse()->getStatusCode());
+        } catch (ConnectException $e) {
+            return response()->json('Error', 408);
+        }
 
-        $response = $client->get("projects/" . $project , ['headers' => [
-            'PRIVATE-TOKEN' => $user->gitlab_token
-            ]]
-        );
 
         return response()->json(json_decode($response->getBody()), $response->getStatusCode());
     }
@@ -50,11 +64,17 @@ class ProjectController extends Controller
             'timeout'  => 5.0,
             ]
         );
+        try {
+            $response = $client->get("projects/" . $project . "/members", ['headers' => [
+                'PRIVATE-TOKEN' => $user->gitlab_token
+                ]]
+            );
+        } catch (ClientException $e) {
+            return response()->json('Error', $e->getResponse()->getStatusCode());
+        } catch (ConnectException $e) {
+            return response()->json('Error', 408);
+        }
 
-        $response = $client->get("projects/" . $project . "/members", ['headers' => [
-            'PRIVATE-TOKEN' => $user->gitlab_token
-            ]]
-        );
 
         return response()->json(json_decode($response->getBody()), $response->getStatusCode());
     }
@@ -67,11 +87,17 @@ class ProjectController extends Controller
             'timeout'  => 5.0,
             ]
         );
+        try {
+            $response = $client->get("projects/" . $project . "/members" . "/" . $member, ['headers' => [
+                'PRIVATE-TOKEN' => $user->gitlab_token
+                ]]
+            );
+        } catch (ClientException $e) {
+            return response()->json('Error', $e->getResponse()->getStatusCode());
+        } catch (ConnectException $e) {
+            return response()->json('Error', 408);
+        }
 
-        $response = $client->get("projects/" . $project . "/members" . "/" . $member, ['headers' => [
-            'PRIVATE-TOKEN' => $user->gitlab_token
-            ]]
-        );
 
         return response()->json(json_decode($response->getBody()), $response->getStatusCode());
     }
@@ -84,11 +110,17 @@ class ProjectController extends Controller
             'timeout'  => 5.0,
             ]
         );
+        try {
+            $response = $client->delete("projects/" . $project . "/members" . "/" . $member, ['headers' => [
+                'PRIVATE-TOKEN' => $user->gitlab_token
+                ]]
+            );
+        } catch (ClientException $e) {
+            return response()->json('Operación no permitida', $e->getResponse()->getStatusCode());
+        } catch (ConnectException $e) {
+            return response()->json('Error', 408);
+        }
 
-        $response = $client->delete("projects/" . $project . "/members" . "/" . $member, ['headers' => [
-            'PRIVATE-TOKEN' => $user->gitlab_token
-            ]]
-        );
 
         return response()->json(json_decode($response->getBody()), $response->getStatusCode());
     }

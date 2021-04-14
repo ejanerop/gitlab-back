@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ConnectException;
 
 class MemberController extends Controller
 {
@@ -15,12 +17,16 @@ class MemberController extends Controller
             'timeout'  => 5.0,
             ]
         );
-
-        $response = $client->get("users?per_page=50" , ['headers' => [
-            'PRIVATE-TOKEN' => $user->gitlab_token
-            ]]
-        );
-
+        try {
+            $response = $client->get("users?per_page=50" , ['headers' => [
+                'PRIVATE-TOKEN' => $user->gitlab_token
+                ]]
+            );
+        } catch (ClientException $e) {
+            return response()->json('Error', $e->getResponse()->getStatusCode());
+        } catch (ConnectException $e) {
+            return response()->json('Error', 408);
+        }
         return response()->json(json_decode($response->getBody()), 200);
 
     }
@@ -33,12 +39,16 @@ class MemberController extends Controller
             'timeout'  => 5.0,
             ]
         );
-
-        $response = $client->get("users/" . $member , ['headers' => [
-            'PRIVATE-TOKEN' => $auth_user->gitlab_token
-            ]]
-        );
-
+        try {
+            $response = $client->get("users/" . $member , ['headers' => [
+                'PRIVATE-TOKEN' => $auth_user->gitlab_token
+                ]]
+            );
+        } catch (ClientException $e) {
+            return response()->json('Error', $e->getResponse()->getStatusCode());
+        } catch (ConnectException $e) {
+            return response()->json('Error', 408);
+        }
         return response()->json(json_decode($response->getBody()), 200);
     }
 
@@ -50,12 +60,16 @@ class MemberController extends Controller
             'timeout'  => 5.0,
             ]
         );
-
-        $response = $client->get("users/".$member."/memberships", ['headers' => [
-            'PRIVATE-TOKEN' => $auth_user->gitlab_token
-            ]]
-        );
-
+        try {
+            $response = $client->get("users/".$member."/memberships", ['headers' => [
+                'PRIVATE-TOKEN' => $auth_user->gitlab_token
+                ]]
+            );
+        } catch (ClientException $e) {
+            return response()->json('Error', $e->getResponse()->getStatusCode());
+        } catch (ConnectException $e) {
+            return response()->json('Error', 408);
+        }
         return response()->json(json_decode($response->getBody()), 200);
     }
 
