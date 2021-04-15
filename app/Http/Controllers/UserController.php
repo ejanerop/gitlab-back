@@ -28,10 +28,10 @@ class UserController extends Controller
     public function store( Request $request )
     {
         $validate = $request->validate([
-            'name' => 'required|string|unique:users',
-            'email' => 'required|email|unique:users',
+            'name'     => 'required|string|unique:users',
+            'email'    => 'required|email|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'token' => 'required|string'
+            'token'    => 'required|string'
         ]);
 
         $user = new User();
@@ -64,7 +64,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validate = $request->validate([
-            'name' => ['required', 'string', Rule::unique('users')->ignore($user)],
+            'name'  => ['required', 'string', Rule::unique('users')->ignore($user)],
             'email' => ['required', 'email', Rule::unique('users')->ignore($user)],
             'token' => 'required|string'
         ]);

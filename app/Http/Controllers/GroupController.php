@@ -18,7 +18,7 @@ class GroupController extends Controller
     {
         $user = $request->user();
         $client = new Client([
-            'base_uri' => "https://gitlab.com/api/v4/",
+            'base_uri' => env('GITLAB_API_URL'),
             'timeout'  => 5.0,
             ]
         );
@@ -46,7 +46,7 @@ class GroupController extends Controller
     {
         $user = $request->user();
         $client = new Client([
-            'base_uri' => "https://gitlab.com/api/v4/",
+            'base_uri' => env('GITLAB_API_URL'),
             'timeout'  => 5.0,
             ]
         );
@@ -68,7 +68,7 @@ class GroupController extends Controller
     {
         $user = $request->user();
         $client = new Client([
-            'base_uri' => "https://gitlab.com/api/v4/",
+            'base_uri' => env('GITLAB_API_URL'),
             'timeout'  => 5.0,
             ]
         );
@@ -91,7 +91,7 @@ class GroupController extends Controller
     {
         $user = $request->user();
         $client = new Client([
-            'base_uri' => "https://gitlab.com/api/v4/",
+            'base_uri' => env('GITLAB_API_URL'),
             'timeout'  => 5.0,
             ]
         );
@@ -114,7 +114,7 @@ class GroupController extends Controller
     {
         $user = $request->user();
         $client = new Client([
-            'base_uri' => "https://gitlab.com/api/v4/",
+            'base_uri' => env('GITLAB_API_URL'),
             'timeout'  => 5.0,
             ]
         );
@@ -136,7 +136,7 @@ class GroupController extends Controller
     {
         $user = $request->user();
         $client = new Client([
-            'base_uri' => "https://gitlab.com/api/v4/",
+            'base_uri' => env('GITLAB_API_URL'),
             'timeout'  => 5.0,
             ]
         );
