@@ -11,16 +11,16 @@ class AuthController extends Controller
     public function login( Request $request )
     {
         $validate = $request->validate([
-            'name' => 'required|string',
+            'name'     => 'required|string',
             'password' => 'required|string'
             ]
         );
         $user = User::where('name', $request->input('name'))->first();
 
-        if ($user && Hash::check($request->password, $user->password)) {
+        if ( $user && Hash::check($request->password, $user->password) ) {
             $user->tokens()->delete();
             $token = $user->createToken('access');
-            return ['user'=>$user , 'token' => $token->plainTextToken];
+            return ['user'=> $user , 'token' => $token->plainTextToken];
         }
         return response()->json('Usuario y/o contraseña incorrecto', 422);
     }

@@ -14,7 +14,7 @@ class MemberController extends Controller
         $user = $request->user();
         $client = new Client([
             'base_uri' => env('GITLAB_API_URL'),
-            'timeout'  => 5.0,
+            'timeout'  => env('GITLAB_API_TIMEOUT'),
             ]
         );
         try {
@@ -36,7 +36,7 @@ class MemberController extends Controller
         $auth_user = $request->user();
         $client = new Client([
             'base_uri' => env('GITLAB_API_URL'),
-            'timeout'  => 5.0,
+            'timeout'  => env('GITLAB_API_TIMEOUT'),
             ]
         );
         try {
@@ -57,7 +57,7 @@ class MemberController extends Controller
         $auth_user = $request->user();
         $client = new Client([
             'base_uri' => env('GITLAB_API_URL'),
-            'timeout'  => 5.0,
+            'timeout'  => env('GITLAB_API_TIMEOUT'),
             ]
         );
         try {

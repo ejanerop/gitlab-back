@@ -14,7 +14,7 @@ class ProjectController extends Controller
         $user = $request->user();
         $client = new Client([
             'base_uri' => env('GITLAB_API_URL'),
-            'timeout'  => 10.0,
+            'timeout'  => env('GITLAB_API_TIMEOUT'),
             ]
         );
         try {
@@ -38,7 +38,7 @@ class ProjectController extends Controller
         $user = $request->user();
         $client = new Client([
             'base_uri' => env('GITLAB_API_URL'),
-            'timeout'  => 5.0,
+            'timeout'  => env('GITLAB_API_TIMEOUT'),
             ]
         );
         try {
@@ -61,7 +61,7 @@ class ProjectController extends Controller
         $user = $request->user();
         $client = new Client([
             'base_uri' => env('GITLAB_API_URL'),
-            'timeout'  => 5.0,
+            'timeout'  => env('GITLAB_API_TIMEOUT'),
             ]
         );
         try {
@@ -84,7 +84,7 @@ class ProjectController extends Controller
         $user = $request->user();
         $client = new Client([
             'base_uri' => env('GITLAB_API_URL'),
-            'timeout'  => 5.0,
+            'timeout'  => env('GITLAB_API_TIMEOUT'),
             ]
         );
         try {
@@ -107,7 +107,7 @@ class ProjectController extends Controller
         $user = $request->user();
         $client = new Client([
             'base_uri' => env('GITLAB_API_URL'),
-            'timeout'  => 5.0,
+            'timeout'  => env('GITLAB_API_TIMEOUT'),
             ]
         );
         try {
