@@ -37,7 +37,7 @@ class UserController extends Controller
         $user = new User();
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('name'));
+        $user->password = Hash::make($request->input('password'));
         $user->gitlab_token = $request->input('token');
         $user->save();
 
@@ -66,12 +66,18 @@ class UserController extends Controller
         $validate = $request->validate([
             'name'  => ['required', 'string', Rule::unique('users')->ignore($user)],
             'email' => ['required', 'email', Rule::unique('users')->ignore($user)],
+            'password' => 'nullable|string|min:8|confirmed',
             'token' => 'required|string'
         ]);
 
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->gitlab_token = $request->input('token');
+
+        if ($request->input('password')) {
+            $user->password = Hash::make($request->input('password'));
+        }
+
         $user->save();
     }
 

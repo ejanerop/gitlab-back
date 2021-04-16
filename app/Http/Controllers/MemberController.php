@@ -18,7 +18,7 @@ class MemberController extends Controller
             ]
         );
         try {
-            $response = $client->get("users?per_page=50" , ['headers' => [
+            $response = $client->get("users?per_page=80" , ['headers' => [
                 'PRIVATE-TOKEN' => $user->gitlab_token
                 ]]
             );
@@ -61,7 +61,7 @@ class MemberController extends Controller
             ]
         );
         try {
-            $response = $client->get("users/".$member."/memberships", ['headers' => [
+            $response = $client->get("users/" . $member . "/memberships", ['headers' => [
                 'PRIVATE-TOKEN' => $auth_user->gitlab_token
                 ]]
             );
