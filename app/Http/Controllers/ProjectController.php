@@ -25,7 +25,7 @@ class ProjectController extends Controller
         } catch (ClientException $e) {
             return response()->json('Error', $e->getResponse()->getStatusCode());
         } catch (ConnectException $e) {
-            return response()->json('Error', 408);
+            return response()->json('Tiempo de espera agotado.', 408);
         }
 
 
@@ -49,7 +49,7 @@ class ProjectController extends Controller
         } catch (ClientException $e) {
             return response()->json('Error', $e->getResponse()->getStatusCode());
         } catch (ConnectException $e) {
-            return response()->json('Error', 408);
+            return response()->json('Tiempo de espera agotado.', 408);
         }
 
 
@@ -72,7 +72,7 @@ class ProjectController extends Controller
         } catch (ClientException $e) {
             return response()->json('Error', $e->getResponse()->getStatusCode());
         } catch (ConnectException $e) {
-            return response()->json('Error', 408);
+            return response()->json('Tiempo de espera agotado.', 408);
         }
 
 
@@ -95,7 +95,7 @@ class ProjectController extends Controller
         } catch (ClientException $e) {
             return response()->json('Error', $e->getResponse()->getStatusCode());
         } catch (ConnectException $e) {
-            return response()->json('Error', 408);
+            return response()->json('Tiempo de espera agotado.', 408);
         }
 
 
@@ -118,7 +118,7 @@ class ProjectController extends Controller
         } catch (ClientException $e) {
             return response()->json('Operación no permitida', $e->getResponse()->getStatusCode());
         } catch (ConnectException $e) {
-            return response()->json('Error', 408);
+            return response()->json('Tiempo de espera agotado.', 408);
         }
 
 

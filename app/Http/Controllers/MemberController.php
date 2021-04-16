@@ -25,7 +25,7 @@ class MemberController extends Controller
         } catch (ClientException $e) {
             return response()->json('Error', $e->getResponse()->getStatusCode());
         } catch (ConnectException $e) {
-            return response()->json('Error', 408);
+            return response()->json('Tiempo de espera agotado.', 408);
         }
         return response()->json(json_decode($response->getBody()), 200);
 
@@ -47,7 +47,7 @@ class MemberController extends Controller
         } catch (ClientException $e) {
             return response()->json('Error', $e->getResponse()->getStatusCode());
         } catch (ConnectException $e) {
-            return response()->json('Error', 408);
+            return response()->json('Tiempo de espera agotado.', 408);
         }
         return response()->json(json_decode($response->getBody()), 200);
     }
@@ -68,7 +68,7 @@ class MemberController extends Controller
         } catch (ClientException $e) {
             return response()->json('Error', $e->getResponse()->getStatusCode());
         } catch (ConnectException $e) {
-            return response()->json('Error', 408);
+            return response()->json('Tiempo de espera agotado.', 408);
         }
         return response()->json(json_decode($response->getBody()), 200);
     }

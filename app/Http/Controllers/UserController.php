@@ -79,6 +79,8 @@ class UserController extends Controller
         }
 
         $user->save();
+
+        return response()->json('Actualizado correctamente', 204);
     }
 
     /**

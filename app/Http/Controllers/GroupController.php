@@ -30,7 +30,7 @@ class GroupController extends Controller
         } catch (ClientException $e) {
             return response()->json('Error', $e->getResponse()->getStatusCode());
         } catch (ConnectException $e) {
-            return response()->json('Error', 408);
+            return response()->json('Tiempo de espera agotado.', 408);
         }
 
         return response()->json(json_decode($response->getBody()), 200);
@@ -58,7 +58,7 @@ class GroupController extends Controller
         } catch (ClientException $e) {
             return response()->json('Error', $e->getResponse()->getStatusCode());
         } catch (ConnectException $e) {
-            return response()->json('Error', 408);
+            return response()->json('Tiempo de espera agotado.', 408);
         }
 
         return response()->json(json_decode($response->getBody()), 200);
@@ -80,7 +80,7 @@ class GroupController extends Controller
         } catch (ClientException $e) {
             return response()->json('Error', $e->getResponse()->getStatusCode());
         } catch (ConnectException $e) {
-            return response()->json('Error', 408);
+            return response()->json('Tiempo de espera agotado.', 408);
         }
 
 
@@ -103,7 +103,7 @@ class GroupController extends Controller
         } catch (ClientException $e) {
             return response()->json('Error', $e->getResponse()->getStatusCode());
         } catch (ConnectException $e) {
-            return response()->json('Error', 408);
+            return response()->json('Tiempo de espera agotado.', 408);
         }
 
 
@@ -126,7 +126,7 @@ class GroupController extends Controller
         } catch (ClientException $e) {
             return response()->json('Error', $e->getResponse()->getStatusCode());
         } catch (ConnectException $e) {
-            return response()->json('Error', 408);
+            return response()->json('Tiempo de espera agotado.', 408);
         }
 
         return response()->json(json_decode($response->getBody()), $response->getStatusCode());
@@ -148,7 +148,7 @@ class GroupController extends Controller
         } catch (ClientException $e) {
             return response()->json('Operación no permitida', $e->getResponse()->getStatusCode());
         } catch (ConnectException $e) {
-            return response()->json('Error', 408);
+            return response()->json('Tiempo de espera agotado.', 408);
         }
 
 
