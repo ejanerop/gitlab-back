@@ -9,9 +9,8 @@ Frontend app: [Gitlab Manager](https://github.com/ejanerop/gitlab-front)
 Clone repository
 
 ```
-git clone https://github.com/ejanerop/archivo_che.git
-cd archivo_che
-git checkout dev
+git clone https://github.com/ejanerop/gitlab-back.git
+cd gitlab-back
 ```
 
 Install dependencies
